@@ -166,9 +166,117 @@ public:
 	}
 };
 
+void printArray(int arr[], int n)
+{
+	int k = 0;
+	// Iterating and printing the array
+	for (int i = 0; i < n; i++)
+	{
+		cout << arr[i] << " ";
+		k += arr[i];
+	}
+	if (n == 10)
+	{
+		cout << endl
+			 << "Total probe: " << k << endl;
+	}
+}
+
+// Function to implement the
+// quadratic probing
+void hashing_quadratic(int table[], int tsize, int arr[], int N)
+{
+	int probe_table[N];
+	// Iterating through the array
+	for (int i = 0; i < N; i++)
+	{
+		// Computing the hash value
+		int hv = arr[i] % tsize;
+
+		// Insert in the table if there
+		// is no collision
+		int k = 1;
+		if (table[hv] == -1)
+			table[hv] = arr[i];
+		else
+		{
+			// If there is a collision
+			// iterating through all
+			// possible quadratic values
+			for (int j = 0; j < tsize; j++, k++)
+			{
+				// Computing the new hash value
+				int t = (hv + j * j) % tsize;
+				if (table[t] == -1)
+				{
+					// Break the loop after
+					// inserting the value
+					// in the table
+					table[t] = arr[i];
+					break;
+				}
+			}
+		}
+		probe_table[i] = k;
+	}
+	cout << "Quadratic: " << endl;
+	printArray(probe_table, N);
+	cout << "--------------------" << endl;
+	printArray(table, tsize);
+}
+
+int hash_one_num(int value)
+{
+	return value % 17;
+}
+
+int hash_two_num(int value)
+{
+	return (13 - (value % 13));
+}
+
+void hashing_double(int table[], int tsize, int arr[], int N)
+{
+	int probe_table[N];
+	// Iterating through the array
+	for (int i = 0; i < N; i++)
+	{
+		// Computing the hash value
+		int hash_one = hash_one_num(arr[i]);
+		int hash_two = hash_two_num(arr[i]);
+		int hv = hash_one % tsize;
+
+		// Insert in the table if there
+		// is no collision
+		int k = 1;
+		for (int j = 0; true; j++, k++)
+		{
+			// Computing the new hash value
+			int t = (hash_one + (j * hash_two)) % tsize;
+			// cout << "hash_val recursion: " << t << endl;
+			//  int t = (hv + j * j) % tsize;
+			if (table[t] == -1)
+			{
+				// Break the loop after
+				// inserting the value
+				// in the table
+				table[t] = arr[i];
+				break;
+			}
+		}
+		probe_table[i] = k;
+	}
+	cout << "Double: " << endl;
+	printArray(probe_table, N);
+	cout << "--------------------" << endl;
+	printArray(table, tsize);
+}
+
 // Driver method to test map class
 int main()
 {
+
+	// Linear ---------------------------------------------------------------------------
 	HashMap<int, int> *h = new HashMap<int, int>;
 	int probeCountTotal = 0;
 
@@ -191,6 +299,37 @@ int main()
 	cout << "Total probes: " << probeCountTotal;
 
 	h->display();
+	cout << endl
+		 << "----------------------------------------------------" << endl;
+
+	// Quadratic ---------------------------------------------------------------------------
+
+	int arr[] = {25, 88, 3, 38, 20, 71, 55, 56, 50, 105};
+	int N = 10;
+
+	// Size of the hash table
+	int L = 17;
+	int hash_table[17];
+
+	// Initializing the hash table
+	for (int i = 0; i < L; i++)
+	{
+		hash_table[i] = -1;
+	}
+
+	// Function call
+	hashing_quadratic(hash_table, L, arr, N);
+	cout << endl
+		 << endl;
+
+	// Double ------------------------------------------------------------------------------
+
+	// Set all values to -1
+	for (int i = 0; i < L; i++)
+	{
+		hash_table[i] = -1;
+	}
+	hashing_double(hash_table, L, arr, N);
 
 	return 0;
 }
