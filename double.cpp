@@ -42,34 +42,25 @@ void hashing(int table[], int tsize, int arr[], int N)
         // Computing the hash value
         int hash_one = hash_one_num(arr[i]);
         int hash_two = hash_two_num(arr[i]);
-        int hv = (hash_one + hash_two) % tsize;
+        int hv = hash_one % tsize;
 
         // Insert in the table if there
         // is no collision
         int k = 1;
-        if (table[hv] == -1)
-            table[hv] = arr[i];
-        else
+        for (int j = 0; true; j++, k++)
         {
-            // If there is a collision
-            // iterating through all
-            // possible quadratic values
-            for (int j = 0; j < tsize; j++, k++)
+            // Computing the new hash value
+            int t = (hash_one + (j * hash_two)) % tsize;
+            // cout << "hash_val recursion: " << t << endl;
+            //  int t = (hv + j * j) % tsize;
+            if (table[t] == -1)
             {
-                // Computing the new hash value
-                int t = (hash_one + ((j + 1) * hash_two)) % tsize;
-                // cout << "hash_val recursion: " << t << endl;
-                //  int t = (hv + j * j) % tsize;
-                if (table[t] == -1)
-                {
-                    // Break the loop after
-                    // inserting the value
-                    // in the table
-                    table[t] = arr[i];
-                    break;
-                }
+                // Break the loop after
+                // inserting the value
+                // in the table
+                table[t] = arr[i];
+                break;
             }
-            // cout << "----------" << endl;
         }
         probe_table[i] = k;
     }
@@ -82,6 +73,7 @@ void hashing(int table[], int tsize, int arr[], int N)
 int main()
 {
     int arr[] = {25, 88, 3, 38, 20, 71, 55, 56, 50, 105};
+    // int arr[] = {18, 41, 22, 44, 59, 32, 31, 73};
     int N = 10;
 
     // Size of the hash table
