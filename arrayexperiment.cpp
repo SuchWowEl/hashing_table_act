@@ -53,10 +53,10 @@ void hashing_quadratic(int table[], int tsize, int arr[], int N)
         }
         probe_table[i] = k;
     }
-    cout << "Quadratic: " << endl;
+   /* cout << "Quadratic: " << endl;
     printArray(probe_table, N);
     cout << "--------------------" << endl;
-    printArray(table, tsize);
+    printArray(table, tsize); */
 }
 
 void hashing_linear(int table[], int tsize, int arr[], int N)
@@ -91,10 +91,10 @@ void hashing_linear(int table[], int tsize, int arr[], int N)
         }
         probe_table[i] = k;
     }
-    cout << "Linear: " << endl;
+  /*  cout << "Linear: " << endl;
     printArray(probe_table, N);
     cout << "--------------------" << endl;
-    printArray(table, tsize);
+    printArray(table, tsize); */
 }
 
 int hash_one_num(int value, int tsize)
@@ -138,10 +138,10 @@ void hashing_double(int table[], int tsize, int arr[], int N)
         }
         probe_table[i] = k;
     }
-    cout << "Double: " << endl;
+ /*   cout << "Double: " << endl;
     printArray(probe_table, N);
     cout << "--------------------" << endl;
-    printArray(table, tsize);
+    printArray(table, tsize); */
 }
 
 bool isPrime(int num)
@@ -200,7 +200,7 @@ int hashsize_getter(float x)
 int main()
 {
     // int copy[] = {25, 88, 3, 38, 20, 71, 55, 56, 50, 105};
-    int N = 30;
+    int N = 1000;
     int *arr = new int[N];
 
     for (int i = 0; i < N; i++)
@@ -225,8 +225,8 @@ int main()
     auto stop1 = chrono::high_resolution_clock::now();
 
     auto duration1 = chrono::duration_cast<std::chrono::microseconds>(stop1-start1);
-    cout << endl
-         << endl;
+   /* cout << endl
+         << endl; */
 
     // Quadratic ------------------------------------------------------------------------------
 
@@ -239,8 +239,8 @@ int main()
     auto stop2 = chrono::high_resolution_clock::now();
 
     auto duration2 = chrono::duration_cast<std::chrono::microseconds>(stop2-start2);
-    cout << endl
-         << endl;
+   /* cout << endl
+         << endl; */
 
     // Double ------------------------------------------------------------------------------
 
@@ -253,8 +253,8 @@ int main()
     auto stop3 = chrono::high_resolution_clock::now();
 
     auto duration3 = chrono::duration_cast<std::chrono::microseconds>(stop3-start3);
-    cout << endl
-         << endl;
+   /* cout << endl
+         << endl; */
 
 
     cout << "Execution time of Linear Probing in microseconds: " << (double)duration1.count() << " microseconds" << endl;
