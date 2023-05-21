@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <chrono>
+#include <algorithm>
 
 using namespace std;
 
@@ -198,7 +200,7 @@ int hashsize_getter(float x)
 int main()
 {
     // int copy[] = {25, 88, 3, 38, 20, 71, 55, 56, 50, 105};
-    int N = 10;
+    int N = 30;
     int *arr = new int[N];
 
     for (int i = 0; i < N; i++)
@@ -217,9 +219,12 @@ int main()
     {
         hash_table[i] = -1;
     }
-
     // Function call
+    auto start1 = chrono::high_resolution_clock::now();
     hashing_linear(hash_table, L, arr, N);
+    auto stop1 = chrono::high_resolution_clock::now();
+
+    auto duration1 = chrono::duration_cast<std::chrono::microseconds>(stop1-start1);
     cout << endl
          << endl;
 
@@ -229,8 +234,11 @@ int main()
     {
         hash_table[i] = -1;
     }
-
+    auto start2 = chrono::high_resolution_clock::now();
     hashing_quadratic(hash_table, L, arr, N);
+    auto stop2 = chrono::high_resolution_clock::now();
+
+    auto duration2 = chrono::duration_cast<std::chrono::microseconds>(stop2-start2);
     cout << endl
          << endl;
 
@@ -240,10 +248,22 @@ int main()
     {
         hash_table[i] = -1;
     }
-
+    auto start3 = chrono::high_resolution_clock::now();
     hashing_double(hash_table, L, arr, N);
+    auto stop3 = chrono::high_resolution_clock::now();
+
+    auto duration3 = chrono::duration_cast<std::chrono::microseconds>(stop3-start3);
     cout << endl
          << endl;
+
+
+    cout << "Execution time of Linear Probing in microseconds: " << (double)duration1.count() << " microseconds" << endl;
+
+    cout << "Execution time of Quadratic Probing in microseconds: " << (double)duration2.count() << " microseconds" << endl;
+
+    cout << "Execution time of Double Hashing in microseconds: " << (double)duration3.count() << " microseconds" << endl;
+
+
 
     delete[] arr, hash_table;
 }
