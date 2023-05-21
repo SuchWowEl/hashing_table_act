@@ -208,7 +208,7 @@ int main()
     }
 
     // Size of the hash table
-    int L = hashsize_getter(N);
+    int L = hashsize_getter((float)N * 1.3);
     cout << "Size of hash_table is: " << L << endl;
     int *hash_table = new int[L];
 
